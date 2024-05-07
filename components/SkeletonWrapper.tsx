@@ -10,7 +10,7 @@ interface ISkeletonWrapper {
 const SkeletonWrapper: FC<PropsWithChildren<ISkeletonWrapper>> = ({
   isLoading,
   children,
-  fullWidth,
+  fullWidth = true,
 }) => {
   if (!isLoading) return children;
   return (
