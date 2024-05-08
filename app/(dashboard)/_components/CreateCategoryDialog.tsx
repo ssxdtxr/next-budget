@@ -35,8 +35,8 @@ import { CreateCategory } from "../_actions/categories";
 import { Category } from ".prisma/client";
 import { toast } from "sonner";
 import { useTheme } from "next-themes";
-import Picker from "@emoji-mart/react";
-import data from "@emoji-mart/data";
+// import Picker from "@emoji-mart/react";
+// import data from "@emoji-mart/data";
 
 interface CreateCategoryDialog {
   type: TransactionType;
@@ -177,13 +177,13 @@ export const CreateCategoryDialog: FC<CreateCategoryDialog> = ({
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-full">
-                        <Picker
+                        {/* <Picker
                           data={data}
                           theme={theme.resolvedTheme}
                           onEmojiSelect={(emoji: { native: string }) => {
                             field.onChange(emoji.native);
                           }}
-                        />
+                        /> */}
                       </PopoverContent>
                     </Popover>
                   </FormControl>
