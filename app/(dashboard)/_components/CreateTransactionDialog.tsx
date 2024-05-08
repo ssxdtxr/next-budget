@@ -13,7 +13,7 @@ import {
   CreateTransactionSchemaType,
 } from "@/schema/transaction";
 import { DialogTitle } from "@radix-ui/react-dialog";
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -26,6 +26,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import CategoryPicker from "./CategoryPicker";
+import { Popover } from "@/components/ui/popover";
+import { PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
+import { Button } from "@/components/ui/button";
+import { CalendarIcon } from "lucide-react";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
 
 interface ICreateTransactionDialog {
   trigger: ReactNode;
@@ -43,6 +49,13 @@ export const CreateTransactionDialog: FC<ICreateTransactionDialog> = ({
       date: new Date(),
     },
   });
+
+  const handleCategoryChange = useCallback(
+    (value: string) => {
+      form.setValue("category", value);
+    },
+    [form]
+  );
 
   return (
     <Dialog>
@@ -103,7 +116,10 @@ export const CreateTransactionDialog: FC<ICreateTransactionDialog> = ({
                   <FormItem>
                     <FormLabel>Category</FormLabel>
                     <FormControl>
-                      <CategoryPicker type={type} />
+                      <CategoryPicker
+                        type={type}
+                        onChange={handleCategoryChange}
+                      />
                     </FormControl>
                     <FormDescription>
                       Select a category for this transaction (optional)
@@ -114,16 +130,43 @@ export const CreateTransactionDialog: FC<ICreateTransactionDialog> = ({
 
               <FormField
                 control={form.control}
-                name="amount"
+                name="date"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Amount</FormLabel>
-                    <FormControl>
-                      <Input defaultValue={0} type="number" {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      Transaction amount (optional)
-                    </FormDescription>
+                    <FormLabel>Transaction date</FormLabel>
+                    <Popover>
+                      <PopoverTrigger>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "w-[200px] pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "PPP")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date) =>
+                            date > new Date() || date < new Date("1900-01-01")
+                          }
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+
+                    <FormDescription>Select a date for this</FormDescription>
                   </FormItem>
                 )}
               />
