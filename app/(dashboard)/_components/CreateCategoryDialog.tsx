@@ -29,13 +29,14 @@ import { PopoverTrigger } from "@radix-ui/react-popover";
 import { CircleOff, Loader2, PlusSquare } from "lucide-react";
 import React, { FC, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
-import Picker from "@emoji-mart/react";
-import data from "@emoji-mart/data";
+
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CreateCategory } from "../_actions/categories";
 import { Category } from ".prisma/client";
 import { toast } from "sonner";
 import { useTheme } from "next-themes";
+import Picker from "@emoji-mart/react";
+import data from "@emoji-mart/data";
 
 interface CreateCategoryDialog {
   type: TransactionType;

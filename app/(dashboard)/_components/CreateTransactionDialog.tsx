@@ -23,6 +23,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import CategoryPicker from "./CategoryPicker";
@@ -135,7 +136,7 @@ export const CreateTransactionDialog: FC<ICreateTransactionDialog> = ({
                   <FormItem>
                     <FormLabel>Transaction date</FormLabel>
                     <Popover>
-                      <PopoverTrigger>
+                      <PopoverTrigger asChild>
                         <FormControl>
                           <Button
                             variant="outline"
@@ -153,7 +154,7 @@ export const CreateTransactionDialog: FC<ICreateTransactionDialog> = ({
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0">
+                      <PopoverContent className="w-auto p-[21px] z-10">
                         <Calendar
                           mode="single"
                           selected={field.value}
@@ -162,15 +163,17 @@ export const CreateTransactionDialog: FC<ICreateTransactionDialog> = ({
                             date > new Date() || date < new Date("1900-01-01")
                           }
                           initialFocus
+                          className="bg-[#09090b] rounded-md border border-[#232326]"
                         />
                       </PopoverContent>
                     </Popover>
-
                     <FormDescription>Select a date for this</FormDescription>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
+            <Button type="submit">Submit</Button>
           </form>
         </Form>
       </DialogContent>
