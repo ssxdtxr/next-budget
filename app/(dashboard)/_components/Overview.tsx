@@ -7,6 +7,7 @@ import { differenceInDays, endOfMonth, startOfMonth } from "date-fns";
 import { FC, useState } from "react";
 import { toast } from "sonner";
 import { StatsCards } from "./StatsCards";
+import { CategoriesStats } from "./CategoriesStats";
 
 interface IOverview {
   userSettings: UserSettings;
@@ -44,6 +45,12 @@ export const Overview: FC<IOverview> = ({ userSettings }) => {
       </div>
       <div className="container flex w-full flex-col gap-2">
         <StatsCards
+          userSettings={userSettings}
+          from={dateRange.from}
+          to={dateRange.to}
+        />
+
+        <CategoriesStats
           userSettings={userSettings}
           from={dateRange.from}
           to={dateRange.to}
